@@ -35,16 +35,15 @@ const List2: FC = () => {
   const publishQuestion = (id: string) => {
     setQuestionList(
       // questionList.map(item => {
-      //   if (item.id !== id) return item
+      //   if (item.id !== id) retur n item
       //   return {
       //     ...item,
       //     isPublished: true,
       //   }
       // })
       produce(draft => {
-        draft.forEach(item => {
-          if (item.id === id) item.isPublished = true
-        })
+        const q = draft.find(item => item.id === id)
+        if (q) q.isPublished = true
       })
     )
   }

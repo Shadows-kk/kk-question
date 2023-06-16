@@ -3,3 +3,6 @@
   padding: 10px;
   margin-bottom: 16px;
 }
+.published{
+  border: 1px solid green;
+}
