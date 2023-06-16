@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import './QuestionCard.css'
+import styles from './QuestionCard.module.scss'
 import classnames from 'classnames'
 
 type propsType = {
@@ -21,13 +21,18 @@ const QuestionCard: FC<propsType> = props => {
   function publish(id: string) {
     publishQuestion && publishQuestion(id)
   }
-  const itemClass = classnames({ itemStyle: true, published: isPublished })
+  const itemStyle = styles['item-style']
+  const published = styles.published
+  const itemClassName = classnames({
+    [itemStyle]: true,
+    [published]: isPublished,
+  })
   return (
-    <div className={itemClass}>
+    <div className={itemClassName}>
       <strong>{title}</strong>
       &nbsp;
       {isPublished ? (
-        <span style={{ color: 'green' }}>已发布</span>
+        <span className={styles['published-span']}>已发布</span>
       ) : (
         <span style={{ color: 'red' }}>未发布</span>
       )}
