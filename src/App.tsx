@@ -1,12 +1,10 @@
 import React from 'react'
-import List2 from './List2'
-import StyledComponentsDemo from './styledComponentsDemo'
+import List from './pages/List'
 
 function App() {
   return (
     <>
-      <List2></List2>
-      <StyledComponentsDemo></StyledComponentsDemo>
+      <List></List>
     </>
   )
 }

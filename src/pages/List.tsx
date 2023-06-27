@@ -1,24 +1,56 @@
 import React, { FC, useState } from 'react'
-import QuestionCard from './components/QuestionCard'
+import QuestionCard from '../components/QuestionCard'
+import styles from './List.module.scss'
 import { produce } from 'immer'
+
+const rowQuestionList = [
+  {
+    id: 'q1',
+    title: '问卷1',
+    isPublished: false,
+    isStar: false,
+    answerCount: 5,
+    creatAt: '6月27日',
+  },
+  {
+    id: 'q2',
+    title: '问卷2',
+    isPublished: false,
+    isStar: false,
+    answerCount: 5,
+    creatAt: '6月27日',
+  },
+  {
+    id: 'q3',
+    title: '问卷3',
+    isPublished: true,
+    isStar: false,
+    answerCount: 5,
+    creatAt: '6月27日',
+  },
+  {
+    id: 'q4',
+    title: '问卷4',
+    isPublished: true,
+    isStar: false,
+    answerCount: 5,
+    creatAt: '6月27日',
+  },
+]
+
 const List2: FC = () => {
   // 问卷列表数
-  const [questionList, setQuestionList] = useState([
-    { id: 'q1', title: '问卷1', isPublished: false },
-    { id: 'q2', title: '问卷2', isPublished: false },
-    { id: 'q3', title: '问卷3', isPublished: true },
-    { id: 'q4', title: '问卷4', isPublished: true },
-  ])
+  const [questionList, setQuestionList] = useState(rowQuestionList)
   const add = () => {
     const r = Math.random().toString().slice(2, 5)
 
     setQuestionList(
       produce(draft => {
-        draft.push({
-          id: 'q' + r,
-          title: '问卷' + r,
-          isPublished: false,
-        })
+        // draft.push({
+        //   id: 'q' + r,
+        //   title: '问卷' + r,
+        //   isPublished: false,
+        // })
       })
     )
   }
