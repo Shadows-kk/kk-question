@@ -5,40 +5,40 @@ import { produce } from 'immer'
 
 const rowQuestionList = [
   {
-    id: 'q1',
+    _id: 'q1',
     title: '问卷1',
     isPublished: false,
     isStar: false,
     answerCount: 5,
-    creatAt: '6月27日',
+    createdAt: '6月27日',
   },
   {
-    id: 'q2',
+    _id: 'q2',
     title: '问卷2',
     isPublished: false,
     isStar: false,
     answerCount: 5,
-    creatAt: '6月27日',
+    createdAt: '6月27日',
   },
   {
-    id: 'q3',
+    _id: 'q3',
     title: '问卷3',
     isPublished: true,
     isStar: false,
     answerCount: 5,
-    creatAt: '6月27日',
+    createdAt: '6月27日',
   },
   {
-    id: 'q4',
+    _id: 'q4',
     title: '问卷4',
     isPublished: true,
     isStar: false,
     answerCount: 5,
-    creatAt: '6月27日',
+    createdAt: '6月27日',
   },
 ]
 
-const List2: FC = () => {
+const List: FC = () => {
   // 问卷列表数
   const [questionList, setQuestionList] = useState(rowQuestionList)
   const add = () => {
@@ -47,59 +47,65 @@ const List2: FC = () => {
     setQuestionList(
       produce(draft => {
         // draft.push({
-        //   id: 'q' + r,
+        //   _id: 'q' + r,
         //   title: '问卷' + r,
         //   isPublished: false,
         // })
       })
     )
   }
-  const deleteQuestion = (id: string) => {
+  const deleteQuestion = (_id: string) => {
     setQuestionList(
       produce(draft => {
         const index = draft.findIndex(item => {
-          return item.id === id
+          return item._id === _id
         })
         draft.splice(index, 1)
       })
     )
   }
-  const publishQuestion = (id: string) => {
+  const publishQuestion = (_id: string) => {
     setQuestionList(
       // questionList.map(item => {
-      //   if (item.id !== id) retur n item
+      //   if (item._id !== _id) retur n item
       //   return {
       //     ...item,
       //     isPublished: true,
       //   }
       // })
       produce(draft => {
-        const q = draft.find(item => item.id === id)
+        const q = draft.find(item => item._id === _id)
         if (q) q.isPublished = true
       })
     )
   }
 
   return (
-    <div className="App">
-      <h1>问卷列表</h1>
-      <div>
-        {questionList.map(item => {
-          const { id, title, isPublished } = item
-          return (
-            <QuestionCard
-              key={id}
-              id={id}
-              title={title}
-              isPublished={isPublished}
-              deleteQuestion={deleteQuestion}
-              publishQuestion={publishQuestion}
-            ></QuestionCard>
-          )
-        })}
+    <>
+      <div className={styles.header}>
+        <div className={styles.left}>
+          <h3>我的问卷</h3>
+        </div>
+        <div className={styles.right}>搜索</div>
       </div>
-      <button onClick={add}>新增</button>
-    </div>
+      <div className={styles.center}>
+        <div>
+          {questionList.map(item => {
+            const { _id, title, isPublished, isStar, answerCount, createdAt } = item
+            return (
+              <QuestionCard
+                key={_id}
+                deleteQuestion={deleteQuestion}
+                publishQuestion={publishQuestion}
+                {...item}
+              ></QuestionCard>
+            )
+          })}
+        </div>
+        <button onClick={add}>新增</button>
+      </div>
+      <div className={styles.bottom}>底部</div>
+    </>
   )
 }
-export default List2
+export default List

@@ -3,23 +3,26 @@ import styles from './QuestionCard.module.scss'
 import classnames from 'classnames'
 
 type propsType = {
-  id: string
+  _id: string
   title: string
   isPublished: boolean
-  deleteQuestion?: (id: string) => void
-  publishQuestion?: (id: string) => void
+  isStar: boolean
+  answerCount: number
+  createdAt: string
+  deleteQuestion?: (_id: string) => void
+  publishQuestion?: (_id: string) => void
 }
 const QuestionCard: FC<propsType> = props => {
-  const { id, title, isPublished, deleteQuestion, publishQuestion } = props
+  const { _id, title, isPublished, deleteQuestion, publishQuestion } = props
 
-  function editQuestion(id: string) {
-    console.log('edit', id)
+  function editQuestion(_id: string) {
+    console.log('edit', _id)
   }
-  function del(id: string) {
-    deleteQuestion && deleteQuestion(id)
+  function del(_id: string) {
+    deleteQuestion && deleteQuestion(_id)
   }
-  function publish(id: string) {
-    publishQuestion && publishQuestion(id)
+  function publish(_id: string) {
+    publishQuestion && publishQuestion(_id)
   }
   const itemStyle = styles['item-style']
   const published = styles.published
@@ -39,21 +42,21 @@ const QuestionCard: FC<propsType> = props => {
       &nbsp;
       <button
         onClick={() => {
-          editQuestion(id)
+          editQuestion(_id)
         }}
       >
         编辑问卷
       </button>
       <button
         onClick={() => {
-          del(id)
+          del(_id)
         }}
       >
         删除问卷
       </button>
       <button
         onClick={() => {
-          publish(id)
+          publish(_id)
         }}
       >
         发布问卷
