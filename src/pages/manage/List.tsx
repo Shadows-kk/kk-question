@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import QuestionCard from '../components/QuestionCard'
+import QuestionCard from '../../components/QuestionCard'
 import styles from './List.module.scss'
 import { produce } from 'immer'
 
@@ -54,31 +54,6 @@ const List: FC = () => {
       })
     )
   }
-  const deleteQuestion = (_id: string) => {
-    setQuestionList(
-      produce(draft => {
-        const index = draft.findIndex(item => {
-          return item._id === _id
-        })
-        draft.splice(index, 1)
-      })
-    )
-  }
-  const publishQuestion = (_id: string) => {
-    setQuestionList(
-      // questionList.map(item => {
-      //   if (item._id !== _id) retur n item
-      //   return {
-      //     ...item,
-      //     isPublished: true,
-      //   }
-      // })
-      produce(draft => {
-        const q = draft.find(item => item._id === _id)
-        if (q) q.isPublished = true
-      })
-    )
-  }
 
   return (
     <>
@@ -92,14 +67,7 @@ const List: FC = () => {
         <div>
           {questionList.map(item => {
             const { _id, title, isPublished, isStar, answerCount, createdAt } = item
-            return (
-              <QuestionCard
-                key={_id}
-                deleteQuestion={deleteQuestion}
-                publishQuestion={publishQuestion}
-                {...item}
-              ></QuestionCard>
-            )
+            return <QuestionCard key={_id} {...item}></QuestionCard>
           })}
         </div>
         <button onClick={add}>新增</button>
