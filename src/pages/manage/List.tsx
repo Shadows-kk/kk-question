@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react'
 import QuestionCard from '../../components/QuestionCard'
 import styles from './List.module.scss'
 import { produce } from 'immer'
+import { useTitle } from 'ahooks'
 
 const rowQuestionList = [
   {
@@ -39,6 +40,7 @@ const rowQuestionList = [
 ]
 
 const List: FC = () => {
+  useTitle('kk问卷-我的问卷')
   // 问卷列表数
   const [questionList, setQuestionList] = useState(rowQuestionList)
   const add = () => {
