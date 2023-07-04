@@ -1,10 +1,10 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import styles from './manageLayout.module.scss'
 import { Space, Button, Divider } from 'antd'
 import { PlusOutlined, BarsOutlined, StarOutlined, DeleteOutlined } from '@ant-design/icons'
 
-const manageLayout: FC = () => {
+const manageLayout: React.FC = () => {
   const nav = useNavigate()
   const { pathname } = useLocation()
   return (
