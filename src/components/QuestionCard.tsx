@@ -28,8 +28,7 @@ const QuestionCard: FC<propsType> = props => {
   }
   const del = () => {
     confirm({
-      title: '注意',
-      content: '确定要删除此问卷吗？',
+      title: '确定要删除此问卷吗？',
       icon: <ExclamationCircleFilled />,
       okText: '确定',
       okType: 'danger',
