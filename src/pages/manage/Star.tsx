@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import QuestionCard from '../../components/QuestionCard'
 import styles from './common.module.scss'
 import { useTitle } from 'ahooks'
-import { Typography } from 'antd'
+import { Typography, Empty } from 'antd'
 
 const { Title } = Typography
 const rowQuestionList = [
@@ -25,9 +25,28 @@ const rowQuestionList = [
 ]
 
 const Star: FC = () => {
+  useTitle('kk问卷-星标问卷')
+  // 问卷列表数
+  const [questionList, setQuestionList] = useState(rowQuestionList)
+
   return (
     <>
-      <div>Star</div>
+      <div className={styles.header}>
+        <div className={styles.left}>
+          <Title level={3}>星标问卷</Title>
+        </div>
+        <div className={styles.right}>搜索</div>
+      </div>
+      <div className={styles.center}>
+        {/* 问卷列表 */}
+        {questionList.length === 0 && <Empty />}
+        {questionList.length > 0 &&
+          questionList.map(item => {
+            const { _id } = item
+            return <QuestionCard key={_id} {...item}></QuestionCard>
+          })}
+      </div>
+      <div className={styles.bottom}>分页</div>
     </>
   )
 }
