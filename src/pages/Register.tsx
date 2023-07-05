@@ -7,6 +7,9 @@ import { LOGIN_PATHNAME } from '../router'
 
 const { Title } = Typography
 const Register: FC = () => {
+  const onFinish = (value: any) => {
+    console.log(value)
+  }
   return (
     <div className={styles.container}>
       <div>
@@ -14,11 +17,11 @@ const Register: FC = () => {
           <Title>
             <UserOutlined></UserOutlined>
           </Title>
-          <Title level={2}>注册用户</Title>
+          <Title level={2}>注册新用户</Title>
         </Space>
       </div>
       <div>
-        <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+        <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} onFinish={onFinish}>
           <Form.Item label="用户名" name="username">
             <Input />
           </Form.Item>
