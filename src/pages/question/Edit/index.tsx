@@ -1,20 +1,13 @@
-import React, { FC, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { getQuestionService } from '../../../service/question'
+import React, { FC } from 'react'
+import useLoadQuestionData from '../../../hooks/useLoadQuestionData'
 
-const Home: FC = () => {
-  const { id = '' } = useParams()
-  useEffect(() => {
-    const fn = async () => {
-      const res = await getQuestionService(id)
-      console.log(res)
-    }
-    fn() // useEffect中无法直接执行async函数
-  }, [])
+const Edit: FC = () => {
+  const { loading, data } = useLoadQuestionData()
   return (
     <>
-      <div>home</div>
+      <div>Edit</div>
+      {loading ? <p>加载中</p> : <p>{JSON.stringify(data)}</p>}
     </>
   )
 }
-export default Home
+export default Edit

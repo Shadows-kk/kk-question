@@ -2,50 +2,17 @@ import React, { FC, useState } from 'react'
 import QuestionCard from '../../components/QuestionCard'
 import ListSearch from '../../components/ListSearch'
 import styles from './common.module.scss'
-import { useTitle } from 'ahooks'
-import { Typography } from 'antd'
+import { useTitle, useRequest } from 'ahooks'
+import { Typography, Spin } from 'antd'
+import { getQuestionList } from '../../service/question'
 
 const { Title } = Typography
-const rowQuestionList = [
-  {
-    _id: 'q1',
-    title: '问卷1',
-    isPublished: true,
-    isStar: true,
-    answerCount: 5,
-    createdAt: '6月27日',
-  },
-  {
-    _id: 'q2',
-    title: '问卷2',
-    isPublished: true,
-    isStar: false,
-    answerCount: 5,
-    createdAt: '6月27日',
-  },
-  {
-    _id: 'q3',
-    title: '问卷3',
-    isPublished: false,
-    isStar: true,
-    answerCount: 5,
-    createdAt: '6月27日',
-  },
-  {
-    _id: 'q4',
-    title: '问卷4',
-    isPublished: false,
-    isStar: false,
-    answerCount: 5,
-    createdAt: '6月27日',
-  },
-]
 
 const List: FC = () => {
   useTitle('kk问卷-我的问卷')
   // 问卷列表数
-  const [questionList, setQuestionList] = useState(rowQuestionList)
-
+  const { loading, data = {} } = useRequest(getQuestionList)
+  const { list = [], total = 0 } = data
   return (
     <>
       <div className={styles.header}>
@@ -58,8 +25,14 @@ const List: FC = () => {
       </div>
       <div className={styles.center}>
         {/* 问卷列表 */}
-        {questionList.length > 0 &&
-          questionList.map(item => {
+        {loading && (
+          <div style={{ textAlign: 'center' }}>
+            <Spin></Spin>
+          </div>
+        )}
+        {!loading &&
+          list.length > 0 &&
+          list.map((item: any) => {
             const { _id } = item
             return <QuestionCard key={_id} {...item}></QuestionCard>
           })}
