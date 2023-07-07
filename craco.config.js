@@ -1,3 +1,4 @@
+// const path = require('path')
 // eslint-disable-next-line no-undef
 module.exports = {
   devServer: {
@@ -5,4 +6,9 @@ module.exports = {
       '/api': 'http://localhost:4001',
     },
   },
+  // webpack: {
+  //   alias: {
+  //     '@': path.resolve(__dirname, 'src'),
+  //   },
+  // },
 }
