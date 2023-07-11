@@ -3,29 +3,13 @@ import ListSearch from '../../components/ListSearch'
 
 import styles from './common.module.scss'
 import { useTitle } from 'ahooks'
-import { Typography, Table, Empty, Tag, Button, Space, Modal } from 'antd'
+import { Typography, Table, Empty, Tag, Button, Space, Modal, Spin } from 'antd'
 import { ExclamationCircleFilled } from '@ant-design/icons'
+import useLoadQuetionListData from '../../hooks/useLoadQuetionListData'
 
 const { Title } = Typography
 const { confirm } = Modal
-const rowQuestionList = [
-  {
-    _id: 'q1',
-    title: '问卷1',
-    isPublished: true,
-    isStar: false,
-    answerCount: 5,
-    createdAt: '6月27日',
-  },
-  {
-    _id: 'q3',
-    title: '问卷3',
-    isPublished: false,
-    isStar: false,
-    answerCount: 5,
-    createdAt: '6月27日',
-  },
-]
+
 const columns = [
   { title: '问卷', dataIndex: 'title', key: 'title' },
   {
@@ -43,7 +27,8 @@ const columns = [
 const Trash: FC = () => {
   useTitle('kk问卷-回收站')
   // 问卷列表数
-  const [questionList, setQuestionList] = useState(rowQuestionList)
+  const { loading, data = {} } = useLoadQuetionListData({ isDeleted: true })
+  const { list = [], total = 0 } = data
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const rowSelection = {
     onChange: (newSelectedRowKeys: React.Key[]) => {
@@ -81,7 +66,7 @@ const Trash: FC = () => {
       <Table
         rowKey={q => q._id}
         columns={columns}
-        dataSource={questionList}
+        dataSource={list}
         rowSelection={rowSelection}
         pagination={false}
       ></Table>
@@ -98,8 +83,13 @@ const Trash: FC = () => {
         </div>
       </div>
       <div className={styles.center}>
-        {questionList.length === 0 && <Empty description="暂无数据" />}
-        {questionList.length > 0 && tableEle}
+        {loading && (
+          <div style={{ textAlign: 'center' }}>
+            <Spin></Spin>
+          </div>
+        )}
+        {!loading && list.length === 0 && <Empty description="暂无数据" />}
+        {list.length > 0 && tableEle}
       </div>
       <div className={styles.bottom}>分页</div>
     </>
