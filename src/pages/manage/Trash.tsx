@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react'
 import ListSearch from '../../components/ListSearch'
+import ListPage from '../../components/ListPage'
 
 import styles from './common.module.scss'
 import { useTitle } from 'ahooks'
@@ -82,7 +83,7 @@ const Trash: FC = () => {
           <ListSearch />
         </div>
       </div>
-      <div className={styles.center}>
+      <div className={styles.center} style={{ marginBottom: '20px' }}>
         {loading && (
           <div style={{ textAlign: 'center' }}>
             <Spin></Spin>
@@ -91,7 +92,10 @@ const Trash: FC = () => {
         {!loading && list.length === 0 && <Empty description="暂无数据" />}
         {list.length > 0 && tableEle}
       </div>
-      <div className={styles.bottom}>分页</div>
+      <div className={styles.bottom}>
+        {' '}
+        <ListPage total={total}></ListPage>
+      </div>
     </>
   )
 }
