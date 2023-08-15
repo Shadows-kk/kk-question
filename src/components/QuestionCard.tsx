@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import styles from './QuestionCard.module.scss'
 import { Link } from 'react-router-dom'
 import { Button, Space, Tag, Divider, Popconfirm, Modal } from 'antd'
@@ -11,6 +11,8 @@ import {
   DeleteOutlined,
   ExclamationCircleFilled,
 } from '@ant-design/icons'
+import { updateQuestionService } from '../service/question'
+import { useRequest } from 'ahooks'
 
 const { confirm } = Modal
 type propsType = {
@@ -23,6 +25,18 @@ type propsType = {
 }
 const QuestionCard: FC<propsType> = props => {
   const { _id, title, isPublished, isStar, answerCount, createdAt } = props
+  const [isStarStatus, setStarStatus] = useState(isStar)
+  const { loading: isStarLoading, run: changeStar } = useRequest(
+    async () => {
+      await updateQuestionService(_id, { isStar: !isStarStatus })
+    },
+    {
+      manual: true,
+      onSuccess() {
+        setStarStatus(!isStarStatus)
+      },
+    }
+  )
   const duplicate = () => {
     alert('copy')
   }
@@ -47,7 +61,7 @@ const QuestionCard: FC<propsType> = props => {
         <div className={styles.left}>
           <Link to={isPublished ? `/question/statistic/${_id}` : `/question/edit/${_id}`}>
             <Space>
-              {isStar && <StarOutlined style={{ color: 'orange' }}></StarOutlined>}
+              {isStarStatus && <StarOutlined style={{ color: 'orange' }}></StarOutlined>}
               {title}
             </Space>
           </Link>
@@ -77,9 +91,11 @@ const QuestionCard: FC<propsType> = props => {
             <Button
               type="text"
               size="small"
-              icon={isStar ? <StarFilled style={{ color: 'orange' }} /> : <StarOutlined />}
+              icon={isStarStatus ? <StarFilled style={{ color: 'orange' }} /> : <StarOutlined />}
+              onClick={changeStar}
+              disabled={isStarLoading}
             >
-              {isStar ? '取消标星' : '标星'}
+              {isStarStatus ? '取消标星' : '标星'}
             </Button>
             <Popconfirm
               placement="top"
