@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 import styles from './QuestionCard.module.scss'
-import { Link } from 'react-router-dom'
-import { Button, Space, Tag, Divider, Popconfirm, Modal } from 'antd'
+import { Link, useNavigate } from 'react-router-dom'
+import { Button, Space, Tag, Divider, Popconfirm, Modal, message } from 'antd'
 import {
   EditOutlined,
   LineChartOutlined,
@@ -11,7 +11,7 @@ import {
   DeleteOutlined,
   ExclamationCircleFilled,
 } from '@ant-design/icons'
-import { updateQuestionService } from '../service/question'
+import { updateQuestionService, duplicateQuestionService } from '../service/question'
 import { useRequest } from 'ahooks'
 
 const { confirm } = Modal
@@ -37,9 +37,17 @@ const QuestionCard: FC<propsType> = props => {
       },
     }
   )
-  const duplicate = () => {
-    alert('copy')
-  }
+  const nav = useNavigate()
+  const { loading: duplicateLoading, run: duplicate } = useRequest(
+    async () => duplicateQuestionService(_id),
+    {
+      manual: true,
+      onSuccess(res) {
+        message.success('复制成功')
+        nav(`/question/edit/${res.id}`)
+      },
+    }
+  )
   const del = () => {
     confirm({
       title: '确定要删除此问卷吗？',
@@ -104,7 +112,7 @@ const QuestionCard: FC<propsType> = props => {
               okText="确定"
               cancelText="取消"
             >
-              <Button type="text" size="small" icon={<CopyOutlined />}>
+              <Button type="text" size="small" icon={<CopyOutlined />} disabled={duplicateLoading}>
                 复制
               </Button>
             </Popconfirm>
