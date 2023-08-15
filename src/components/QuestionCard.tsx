@@ -48,6 +48,17 @@ const QuestionCard: FC<propsType> = props => {
       },
     }
   )
+  const [deletedFlag, setDeletedFlag] = useState(false)
+  const { loading: deleteLoading, run: deleteQuestion } = useRequest(
+    async () => await updateQuestionService(_id, { isDeleted: true }),
+    {
+      manual: true,
+      onSuccess(res) {
+        message.success('删除成功')
+        setDeletedFlag(true)
+      },
+    }
+  )
   const del = () => {
     confirm({
       title: '确定要删除此问卷吗？',
@@ -56,13 +67,16 @@ const QuestionCard: FC<propsType> = props => {
       okType: 'danger',
       cancelText: '取消',
       onOk() {
-        console.log('OK')
+        deleteQuestion()
       },
       onCancel() {
         console.log('Cancel')
       },
     })
   }
+  //已经删除的卡片 不渲染
+  if (deletedFlag) return null
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -117,7 +131,13 @@ const QuestionCard: FC<propsType> = props => {
               </Button>
             </Popconfirm>
 
-            <Button type="text" size="small" icon={<DeleteOutlined />} onClick={del}>
+            <Button
+              type="text"
+              size="small"
+              icon={<DeleteOutlined />}
+              onClick={del}
+              disabled={deleteLoading}
+            >
               删除
             </Button>
           </Space>
