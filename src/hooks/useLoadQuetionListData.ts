@@ -15,7 +15,7 @@ type OptionType = {
 function useLoadQuetionListData(opt: Partial<OptionType> = {}) {
   const { isStar, isDeleted } = opt
   const [searchParams] = useSearchParams()
-  const { data, error, loading } = useRequest(
+  const { data, error, loading, refresh } = useRequest(
     async () => {
       const keyword = searchParams.get(LIST_SEARCH_PARAM_KEY) || ''
       const page = parseInt(searchParams.get(LIST_PAGE_PARAM_KEY) || '') || 1
@@ -27,6 +27,6 @@ function useLoadQuetionListData(opt: Partial<OptionType> = {}) {
       refreshDeps: [searchParams], //刷新的依赖项
     }
   )
-  return { data, error, loading }
+  return { data, error, loading, refresh }
 }
 export default useLoadQuetionListData

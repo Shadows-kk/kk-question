@@ -3,10 +3,11 @@ import ListSearch from '../../components/ListSearch'
 import ListPage from '../../components/ListPage'
 
 import styles from './common.module.scss'
-import { useTitle } from 'ahooks'
-import { Typography, Table, Empty, Tag, Button, Space, Modal, Spin } from 'antd'
+import { useRequest, useTitle } from 'ahooks'
+import { Typography, Table, Empty, Tag, Button, Space, Modal, Spin, message } from 'antd'
 import { ExclamationCircleFilled } from '@ant-design/icons'
 import useLoadQuetionListData from '../../hooks/useLoadQuetionListData'
+import { updateQuestionService } from '../../service/question'
 
 const { Title } = Typography
 const { confirm } = Modal
@@ -28,7 +29,7 @@ const columns = [
 const Trash: FC = () => {
   useTitle('kk问卷-回收站')
   // 问卷列表数
-  const { loading, data = {} } = useLoadQuetionListData({ isDeleted: true })
+  const { loading, data = {}, refresh } = useLoadQuetionListData({ isDeleted: true })
   const { list = [], total = 0 } = data
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const rowSelection = {
@@ -36,6 +37,22 @@ const Trash: FC = () => {
       setSelectedIds(newSelectedRowKeys as string[])
     },
   }
+  // 恢复问卷
+  const { run: recover } = useRequest(
+    async () => {
+      for await (const id of selectedIds) {
+        await updateQuestionService(id, { isDeleted: false })
+      }
+    },
+    {
+      manual: true,
+      debounceWait: 500, //防抖
+      onSuccess() {
+        message.success('恢复成功')
+        refresh()
+      },
+    }
+  )
   const del = () => {
     confirm({
       title: '确定要删除此问卷吗？',
@@ -56,7 +73,7 @@ const Trash: FC = () => {
     <>
       <div style={{ marginBottom: '14px' }}>
         <Space>
-          <Button type="primary" disabled={selectedIds.length === 0}>
+          <Button type="primary" disabled={selectedIds.length === 0} onClick={recover}>
             恢复
           </Button>
           <Button danger disabled={selectedIds.length === 0} onClick={del}>
