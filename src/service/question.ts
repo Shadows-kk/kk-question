@@ -36,9 +36,15 @@ export async function updateQuestionService(
   const data = (await instance.patch(url, opt)) as ResDataType
   return data
 }
-//f复制问卷信息
+//复制问卷信息
 export async function duplicateQuestionService(id: string): Promise<ResDataType> {
   const url = `/api/question/duplicate${id}`
   const data = (await instance.post(url)) as ResDataType
+  return data
+}
+//批量彻底删除
+export async function deleteQuestionService(ids: string[]): Promise<ResDataType> {
+  const url = `/api/question`
+  const data = (await instance.delete(url, { data: { ids } })) as ResDataType
   return data
 }

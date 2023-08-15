@@ -7,7 +7,7 @@ import { useRequest, useTitle } from 'ahooks'
 import { Typography, Table, Empty, Tag, Button, Space, Modal, Spin, message } from 'antd'
 import { ExclamationCircleFilled } from '@ant-design/icons'
 import useLoadQuetionListData from '../../hooks/useLoadQuetionListData'
-import { updateQuestionService } from '../../service/question'
+import { updateQuestionService, deleteQuestionService } from '../../service/question'
 
 const { Title } = Typography
 const { confirm } = Modal
@@ -50,9 +50,18 @@ const Trash: FC = () => {
       onSuccess() {
         message.success('恢复成功')
         refresh()
+        setSelectedIds([])
       },
     }
   )
+  const { run: deleteQuestion } = useRequest(async () => await deleteQuestionService(selectedIds), {
+    manual: true,
+    onSuccess() {
+      message.success('删除成功')
+      refresh()
+      setSelectedIds([])
+    },
+  })
   const del = () => {
     confirm({
       title: '确定要删除此问卷吗？',
@@ -62,7 +71,7 @@ const Trash: FC = () => {
       okType: 'danger',
       cancelText: '取消',
       onOk() {
-        alert(selectedIds)
+        deleteQuestion()
       },
       onCancel() {
         console.log('Cancel')
