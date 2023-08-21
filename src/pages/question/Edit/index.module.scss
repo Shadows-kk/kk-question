@@ -1,0 +1,54 @@
+
+.container{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f2f5;
+  .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    height: 70px;
+  }
+  .main{
+    flex: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    margin: 0 24px;
+    .center{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .canvas-container{
+        width: 400px;
+        height: 715px;
+        background-color: #fff;
+        padding: 12px;
+        overflow: auto;
+        
+      }
+    }
+    .left{
+      width: 285px;
+      background-color: #fff;
+      padding: 0 12px;
+    }
+    .right{
+      width: 285px;
+      background-color: #fff;
+      padding: 0 12px;
+    }
+  } 
+}
+//  
+/* 滚动条上的滚动滑块 */
+::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+  // background-color: #eee;
+}

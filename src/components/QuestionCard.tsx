@@ -38,6 +38,13 @@ const QuestionCard: FC<propsType> = props => {
     }
   )
   const nav = useNavigate()
+
+  const editQuestion = () => {
+    nav(`/question/edit/${_id}`)
+  }
+  const statistic = () => {
+    nav(`/question/statistic/${_id}`)
+  }
   const { loading: duplicateLoading, run: duplicate } = useRequest(
     async () => duplicateQuestionService(_id),
     {
@@ -100,10 +107,16 @@ const QuestionCard: FC<propsType> = props => {
       <div className={styles['bottom-container']}>
         <div className={styles.left}>
           <Space>
-            <Button type="text" size="small" icon={<EditOutlined />}>
+            <Button type="text" size="small" icon={<EditOutlined />} onClick={editQuestion}>
               编辑问卷
             </Button>
-            <Button type="text" size="small" icon={<LineChartOutlined />} disabled={!isPublished}>
+            <Button
+              type="text"
+              size="small"
+              icon={<LineChartOutlined />}
+              disabled={!isPublished}
+              onClick={statistic}
+            >
               数据统计
             </Button>
           </Space>
