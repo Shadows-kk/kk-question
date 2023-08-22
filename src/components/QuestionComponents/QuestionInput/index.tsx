@@ -1,18 +1,13 @@
-import React from 'react'
-import { Typography, Input } from 'antd'
-import { QuestionInputPropsType, QuestionInputDefaultProps } from './interface'
+/**
+ * @description 问卷 - 标题
+ */
+import Component from './QuestionInput'
+import { QuestionInputDefaultProps } from './interface'
+export * from './interface'
 
-const { Paragraph } = Typography
-const QuestionInput: React.FC<QuestionInputPropsType> = (props: QuestionInputPropsType) => {
-  const { title, placeholder } = { ...QuestionInputDefaultProps, ...props }
-
-  return (
-    <div>
-      <Paragraph strong>{title}</Paragraph>
-      <div>
-        <Input placeholder={placeholder}></Input>
-      </div>
-    </div>
-  )
+export default {
+  title: '标题',
+  type: 'questionInput',
+  Component,
+  defaultProps: QuestionInputDefaultProps,
 }
-export default QuestionInput

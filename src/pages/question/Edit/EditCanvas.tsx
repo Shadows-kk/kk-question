@@ -1,7 +1,7 @@
 import React from 'react'
 import style from './EditCanvas.module.scss'
-import QuestionInput from '../../../components/QuestionComponents/QuestionInput'
-import QuestionTitle from '../../../components/QuestionComponents/QuestionTitle'
+import QuestionInput from '../../../components/QuestionComponents/QuestionInput/QuestionInput'
+import QuestionTitle from '../../../components/QuestionComponents/QuestionTitle/QuestionTitle'
 const EditCanvas: React.FC = () => {
   return (
     <div className={style.canvas}>

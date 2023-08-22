@@ -15,7 +15,6 @@ function useLoadUserData() {
   const { run } = useRequest(getUserInfoService, {
     manual: true,
     onSuccess(res) {
-      console.log(res)
       const { username, nickname } = res
       //请求到的数据，放入redux中
       dispatch(loginReducer({ username, nickname }))
