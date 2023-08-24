@@ -4,7 +4,7 @@ import style from './index.module.scss'
 import EditCanvas from './EditCanvas'
 
 const Edit: FC = () => {
-  const { loading, data } = useLoadQuestionData()
+  const { loading } = useLoadQuestionData()
   return (
     <div className={style.container}>
       <div className={style.header}>
@@ -16,7 +16,7 @@ const Edit: FC = () => {
         <div className={style.left}>left</div>
         <div className={style.center}>
           <div className={style['canvas-container']}>
-            <EditCanvas></EditCanvas>
+            <EditCanvas loading={loading}></EditCanvas>
           </div>
         </div>
         <div className={style.right}>right</div>

@@ -28,6 +28,6 @@ const useLoadQuestionData = () => {
   useEffect(() => {
     run(id)
   }, [id])
-  return { data, error, loading }
+  return { error, loading }
 }
 export default useLoadQuestionData
