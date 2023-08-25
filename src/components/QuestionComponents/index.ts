@@ -17,5 +17,8 @@ const componentConfList: ComponentConfType[] = [QuestionInputConf, QuestionTitle
 
 // 根据类型返回组件的配置
 export function getComponentConfByType(type: string) {
-  return componentConfList.find(c => c.type === type)
+  const cpn = componentConfList.find(c => {
+    return c.type === type
+  })
+  return cpn
 }

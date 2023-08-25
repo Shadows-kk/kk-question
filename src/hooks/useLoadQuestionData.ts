@@ -22,7 +22,7 @@ const useLoadQuestionData = () => {
   useEffect(() => {
     if (!data) return
     const { title = '', componentList = [] } = data
-    dispatch(resetComponents(componentList))
+    dispatch(resetComponents({ componentList }))
   }, [data])
   //监听到id变化，获取问卷的详情数据
   useEffect(() => {
