@@ -21,8 +21,12 @@ const useLoadQuestionData = () => {
   // 监听data的变化，将获取的数据存入redux中
   useEffect(() => {
     if (!data) return
-    const { title = '', componentList = [] } = data
-    dispatch(resetComponents({ componentList }))
+    const { componentList = [] } = data
+    let selectedID = ''
+    if (componentList.length > 0) {
+      selectedID = componentList[0].fe_id
+    }
+    dispatch(resetComponents({ componentList, selectedID }))
   }, [data])
   //监听到id变化，获取问卷的详情数据
   useEffect(() => {

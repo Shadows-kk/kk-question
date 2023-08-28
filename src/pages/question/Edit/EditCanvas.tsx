@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { MouseEvent } from 'react'
 import { Spin } from 'antd'
+import classNames from 'classnames'
+import { useDispatch } from 'react-redux'
 import style from './EditCanvas.module.scss'
 import useGetComponentInfo from '../../../hooks/useGetComponentInfo'
 import { getComponentConfByType } from '../../../components/QuestionComponents'
-import { ComponentInfoType } from '../../../store/componentsReducer'
+import { ComponentInfoType, changeSelectedId } from '../../../store/componentsReducer'
 type PropsType = {
   loading: boolean
 }
@@ -16,8 +18,13 @@ function getComponent(component: ComponentInfoType) {
   return <Component {...props}></Component>
 }
 const EditCanvas: React.FC<PropsType> = ({ loading }) => {
-  const { componentList } = useGetComponentInfo()
+  const { componentList, selectedID } = useGetComponentInfo()
+  const dispatch = useDispatch()
 
+  const handleClick = (event: MouseEvent, id: string) => {
+    event.stopPropagation() //阻止冒泡
+    dispatch(changeSelectedId(id))
+  }
   if (loading) {
     return (
       <div style={{ textAlign: 'center', marginTop: '24px' }}>
@@ -29,22 +36,19 @@ const EditCanvas: React.FC<PropsType> = ({ loading }) => {
     <div className={style.canvas}>
       {componentList.map(c => {
         const { fe_id } = c
+        // 使用classNames拼接样式
+        const wraperDefaultClassName = style['component-wrapper']
+        const selectedClassName = style.selected
+        const wrapperClassName = classNames({
+          [wraperDefaultClassName]: true,
+          [selectedClassName]: fe_id === selectedID,
+        })
         return (
-          <div key={fe_id} className={style['component-wrapper']}>
+          <div key={fe_id} className={wrapperClassName} onClick={e => handleClick(e, fe_id)}>
             <div className={style.component}>{getComponent(c)}</div>
           </div>
         )
       })}
-      {/* <div className={style['component-wrapper']}>
-        <div className={style.component}>
-          <QuestionTitle level={2} text={'一级标题'} isCenter></QuestionTitle>
-        </div>
-      </div>
-      <div className={style['component-wrapper']}>
-        <div className={style.component}>
-          <QuestionInput></QuestionInput>
-        </div>
-      </div> */}
     </div>
   )
 }
