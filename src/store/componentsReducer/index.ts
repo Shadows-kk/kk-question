@@ -30,7 +30,19 @@ const componentsSlice = createSlice({
     changeSelectedId: produce((draft: ComponentsStateType, action: PayloadAction<string>) => {
       draft.selectedID = action.payload
     }),
+    addComponent: produce(
+      (draft: ComponentsStateType, action: PayloadAction<ComponentInfoType>) => {
+        const { selectedID, componentList } = draft
+        const index = componentList.findIndex(i => i.fe_id === selectedID)
+        if (index < 0) {
+          draft.componentList.push(action.payload)
+        } else {
+          draft.componentList.splice(index + 1, 0, action.payload)
+        }
+        draft.selectedID = action.payload.fe_id
+      }
+    ),
   },
 })
-export const { resetComponents, changeSelectedId } = componentsSlice.actions
+export const { resetComponents, changeSelectedId, addComponent } = componentsSlice.actions
 export default componentsSlice.reducer

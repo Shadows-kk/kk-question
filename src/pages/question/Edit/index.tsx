@@ -5,6 +5,7 @@ import { changeSelectedId } from '../../../store/componentsReducer'
 
 import style from './index.module.scss'
 import EditCanvas from './EditCanvas'
+import LeftPanel from './LeftPanel'
 
 const Edit: FC = () => {
   const { loading } = useLoadQuestionData()
@@ -20,7 +21,9 @@ const Edit: FC = () => {
         <div>操作</div>
       </div>
       <div className={style.main}>
-        <div className={style.left}>left</div>
+        <div className={style.left}>
+          <LeftPanel></LeftPanel>
+        </div>
         <div className={style.center} onClick={clearSelectedId}>
           <div className={style['canvas-container']}>
             <EditCanvas loading={loading}></EditCanvas>
