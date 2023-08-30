@@ -6,6 +6,7 @@ import { changeSelectedId } from '../../../store/componentsReducer'
 import style from './index.module.scss'
 import EditCanvas from './EditCanvas'
 import LeftPanel from './LeftPanel'
+import RightPanel from './RightPanel'
 
 const Edit: FC = () => {
   const { loading } = useLoadQuestionData()
@@ -29,7 +30,9 @@ const Edit: FC = () => {
             <EditCanvas loading={loading}></EditCanvas>
           </div>
         </div>
-        <div className={style.right}>right</div>
+        <div className={style.right}>
+          <RightPanel></RightPanel>
+        </div>
       </div>
     </div>
   )

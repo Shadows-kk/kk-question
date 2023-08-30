@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import produce from 'immer'
 import { ComponentPropsType } from '../../components/QuestionComponents'
 export type ComponentInfoType = {
-  fe_id: string //TODO
+  fe_id: string //前端生成的id，服务端 mongoDB 不认这种格式，所以前端自定义生成一个fe_id
   type: string
   title: string
   props: ComponentPropsType
