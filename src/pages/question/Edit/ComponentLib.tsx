@@ -10,6 +10,7 @@ const { Title } = Typography
 const generateComponent = (c: ComponentConfType) => {
   const dispatch = useDispatch()
   const { title, type, Component, defaultProps } = c
+  // 点击添加到画布中
   const handleClick = () => {
     dispatch(
       addComponent({

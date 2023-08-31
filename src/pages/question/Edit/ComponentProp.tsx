@@ -1,21 +1,29 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { changeComponentProp } from '../../../store/componentsReducer'
 import useGetComponentInfo from '../../../hooks/useGetComponentInfo'
-import { getComponentConfByType } from '../../../components/QuestionComponents'
+import { getComponentConfByType, ComponentPropsType } from '../../../components/QuestionComponents'
 
 const NoProp: React.FC = () => {
   return <div>未选中组件</div>
 }
 const ComponentProp: React.FC = () => {
+  const dispatch = useDispatch()
   const { selectedComponent } = useGetComponentInfo()
-  console.log(selectedComponent)
   if (selectedComponent == null) return <NoProp />
-  // 根据选择的组件选择类型
+  // 根据 选择的组件 选择类型
   const { type, props } = selectedComponent
-  // 根据类型找到配置
+  // 根据 类型 找到配置
   const componentConf = getComponentConfByType(type)
   if (componentConf == null) return <NoProp />
+
+  const changeProps = (newProps: ComponentPropsType) => {
+    if (selectedComponent == null) return
+    const { fe_id } = selectedComponent
+    dispatch(changeComponentProp({ fe_id, newProps }))
+  }
   // 根据配置找到属性组件
   const { PropComponent } = componentConf
-  return <PropComponent {...props}></PropComponent>
+  return <PropComponent {...props} onChange={changeProps}></PropComponent>
 }
 export default ComponentProp
