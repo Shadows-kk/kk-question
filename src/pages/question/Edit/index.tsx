@@ -4,6 +4,7 @@ import useLoadQuestionData from '../../../hooks/useLoadQuestionData'
 import { changeSelectedId } from '../../../store/componentsReducer'
 
 import style from './index.module.scss'
+import EditHeader from './EditHeader'
 import EditCanvas from './EditCanvas'
 import LeftPanel from './LeftPanel'
 import RightPanel from './RightPanel'
@@ -16,11 +17,7 @@ const Edit: FC = () => {
   }
   return (
     <div className={style.container}>
-      <div className={style.header}>
-        <div>返回</div>
-        <div>工具栏</div>
-        <div>操作</div>
-      </div>
+      <EditHeader></EditHeader>
       <div className={style.main}>
         <div className={style.left}>
           <LeftPanel></LeftPanel>

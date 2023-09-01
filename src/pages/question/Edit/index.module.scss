@@ -4,13 +4,7 @@
   flex-direction: column;
   height: 100vh;
   background-color: #f0f2f5;
-  .header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
-    height: 70px;
-  }
+  
   .main{
     flex: auto;
     display: flex;
