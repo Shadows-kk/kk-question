@@ -34,21 +34,23 @@ const EditCanvas: React.FC<PropsType> = ({ loading }) => {
   }
   return (
     <div className={style.canvas}>
-      {componentList.map(c => {
-        const { fe_id } = c
-        // 使用classNames拼接样式
-        const wraperDefaultClassName = style['component-wrapper']
-        const selectedClassName = style.selected
-        const wrapperClassName = classNames({
-          [wraperDefaultClassName]: true,
-          [selectedClassName]: fe_id === selectedID,
-        })
-        return (
-          <div key={fe_id} className={wrapperClassName} onClick={e => handleClick(e, fe_id)}>
-            <div className={style.component}>{getComponent(c)}</div>
-          </div>
-        )
-      })}
+      {componentList
+        .filter(i => !i.isHidden)
+        .map(c => {
+          const { fe_id } = c
+          // 使用classNames拼接样式
+          const wraperDefaultClassName = style['component-wrapper']
+          const selectedClassName = style.selected
+          const wrapperClassName = classNames({
+            [wraperDefaultClassName]: true,
+            [selectedClassName]: fe_id === selectedID,
+          })
+          return (
+            <div key={fe_id} className={wrapperClassName} onClick={e => handleClick(e, fe_id)}>
+              <div className={style.component}>{getComponent(c)}</div>
+            </div>
+          )
+        })}
     </div>
   )
 }

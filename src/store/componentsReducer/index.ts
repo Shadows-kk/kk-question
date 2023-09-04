@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import produce from 'immer'
 import { ComponentPropsType } from '../../components/QuestionComponents'
+import { getNextSelectedId } from './utils'
 export type ComponentInfoType = {
   fe_id: string //前端生成的id，服务端 mongoDB 不认这种格式，所以前端自定义生成一个fe_id
   type: string
   title: string
+  isHidden?: boolean
   props: ComponentPropsType
 }
 export type ComponentsStateType = {
@@ -59,8 +61,42 @@ const componentsSlice = createSlice({
         }
       }
     ),
+    // 删除选中的组件
+    removeSelectedComponent: produce((draft: ComponentsStateType) => {
+      const { componentList, selectedID: deleteID } = draft
+      // 重新计算selectedID
+      const newSelectedId = getNextSelectedId(deleteID, componentList)
+      draft.componentList = draft.componentList.filter(i => i.fe_id !== draft.selectedID)
+      draft.selectedID = newSelectedId
+    }),
+    // 切换组件显示与隐藏
+    changeComponentHidden: produce(
+      (draft: ComponentsStateType, action: PayloadAction<{ fe_id: string; isHidden: boolean }>) => {
+        const { fe_id, isHidden } = action.payload
+        // 重新计算selectedID
+        let newSelectedId = ''
+        if (isHidden) {
+          // 隐藏
+          newSelectedId = getNextSelectedId(fe_id, draft.componentList)
+        } else {
+          // 显示
+          newSelectedId = fe_id
+        }
+        draft.selectedID = newSelectedId
+        const curComponent = draft.componentList.find(i => i.fe_id === fe_id)
+        if (curComponent) {
+          curComponent.isHidden = isHidden
+        }
+      }
+    ),
   },
 })
-export const { resetComponents, changeSelectedId, addComponent, changeComponentProp } =
-  componentsSlice.actions
+export const {
+  resetComponents,
+  changeSelectedId,
+  addComponent,
+  changeComponentProp,
+  removeSelectedComponent,
+  changeComponentHidden,
+} = componentsSlice.actions
 export default componentsSlice.reducer
