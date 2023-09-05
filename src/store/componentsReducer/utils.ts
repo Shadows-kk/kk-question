@@ -9,11 +9,11 @@ export const getNextSelectedId = (fe_id: string, componentList: ComponentInfoTyp
   // 重新计算id
   let newSelectedId = ''
   const length = visibleComponentList.length
-  if (length < 1) {
+  if (length <= 1) {
     // 只有一个组件的时候
     newSelectedId = ''
   } else {
-    if (index === length - 1) {
+    if (index + 1 === length) {
       // 删除最后一个组件的时候
       newSelectedId = visibleComponentList[index - 1].fe_id
     } else {
