@@ -26,7 +26,7 @@ const useLoadQuestionData = () => {
     if (componentList.length > 0) {
       selectedID = componentList[0].fe_id
     }
-    dispatch(resetComponents({ componentList, selectedID }))
+    dispatch(resetComponents({ componentList, selectedID, copiedComponent: null }))
   }, [data])
   //监听到id变化，获取问卷的详情数据
   useEffect(() => {
