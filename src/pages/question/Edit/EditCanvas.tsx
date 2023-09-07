@@ -6,6 +6,7 @@ import style from './EditCanvas.module.scss'
 import useGetComponentInfo from '../../../hooks/useGetComponentInfo'
 import { getComponentConfByType } from '../../../components/QuestionComponents'
 import { ComponentInfoType, changeSelectedId } from '../../../store/componentsReducer'
+import useBindCanvasKeyPress from '../../../hooks/useBindCanvasKeyPress'
 type PropsType = {
   loading: boolean
 }
@@ -25,6 +26,8 @@ const EditCanvas: React.FC<PropsType> = ({ loading }) => {
     event.stopPropagation() //阻止冒泡
     dispatch(changeSelectedId(id))
   }
+  // 绑定快捷键
+  useBindCanvasKeyPress()
   if (loading) {
     return (
       <div style={{ textAlign: 'center', marginTop: '24px' }}>

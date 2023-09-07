@@ -115,6 +115,21 @@ const componentsSlice = createSlice({
       // 插入组件
       insertNewComponent(draft, copiedComponent)
     }),
+    // 选中上一个组件
+    selectPrevComponent: produce((draft: ComponentsStateType) => {
+      const { componentList, selectedID } = draft
+      const index = componentList.findIndex(i => i.fe_id === selectedID)
+      if (index > 0) draft.selectedID = componentList[index - 1].fe_id
+    }),
+    // 选中下一个组件
+    selectNextComponent: produce((draft: ComponentsStateType) => {
+      const { componentList, selectedID } = draft
+      const index = componentList.findIndex(i => i.fe_id === selectedID)
+      if (index < 0) return
+      if (index < componentList.length - 1) draft.selectedID = componentList[index + 1].fe_id
+    }),
+    // 撤销
+    // 重做
   },
 })
 export const {
@@ -127,5 +142,7 @@ export const {
   toggleComponentLock,
   copyComponent,
   pasteComponent,
+  selectPrevComponent,
+  selectNextComponent,
 } = componentsSlice.actions
 export default componentsSlice.reducer
