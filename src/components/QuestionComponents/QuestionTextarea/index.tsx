@@ -9,7 +9,7 @@ export * from './interface'
 // input组件的配置
 export default {
   title: '标题',
-  type: 'QuestionTextarea',
+  type: 'questionTextarea',
   Component, //画布显示的组件
   PropComponent, //修改属性的组件
   defaultProps: QuestionTextareaDefaultProps,
