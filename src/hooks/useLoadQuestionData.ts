@@ -4,6 +4,7 @@ import { useRequest } from 'ahooks'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { resetComponents } from '../store/componentsReducer/index'
+import { resetPageInfo } from '../store/pageInfoReducer'
 
 const useLoadQuestionData = () => {
   const { id = '' } = useParams()
@@ -21,12 +22,15 @@ const useLoadQuestionData = () => {
   // 监听data的变化，将获取的数据存入redux中
   useEffect(() => {
     if (!data) return
-    const { componentList = [] } = data
+    const { componentList = [], title = '', desc = '', js = '', css = '' } = data
     let selectedID = ''
     if (componentList.length > 0) {
       selectedID = componentList[0].fe_id
     }
+    // 1.把 componentList 存入 redux中
     dispatch(resetComponents({ componentList, selectedID, copiedComponent: null }))
+    // 2. 把 pageInfo 存入 redux中
+    dispatch(resetPageInfo({ title, desc, js, css }))
   }, [data])
   //监听到id变化，获取问卷的详情数据
   useEffect(() => {
