@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Button, Typography, Space, Form, Input } from 'antd'
+import { Button, Typography, Space, Input } from 'antd'
 import { LeftOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
-import { useRequest, useKeyPress } from 'ahooks'
+import { useRequest, useKeyPress, useDebounceEffect } from 'ahooks'
 import { changePageTitle } from '@/store/pageInfoReducer'
 import style from './EditHeader.module.scss'
 import EditToolbar from './EditToolbar'
@@ -69,6 +69,14 @@ const SaveButton: React.FC = () => {
     event.preventDefault()
     if (!loading) save()
   })
+  // 自动保存
+  useDebounceEffect(
+    () => {
+      save()
+    },
+    [componentList, pageInfo],
+    { wait: 1000 }
+  )
   return (
     <Button onClick={save} icon={loading ? <LoadingOutlined /> : null}>
       保存
