@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Button, Typography, Space, Input } from 'antd'
+import { Button, Typography, Space, Input, message } from 'antd'
 import { LeftOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 import { useRequest, useKeyPress, useDebounceEffect } from 'ahooks'
@@ -83,6 +83,31 @@ const SaveButton: React.FC = () => {
     </Button>
   )
 }
+// 发布按钮
+const PublishButton: React.FC = () => {
+  const nav = useNavigate()
+  const { id } = useParams()
+  const { componentList = [] } = useGetComponentInfo()
+  const pageInfo = useGetPageInfo()
+  const { loading, run: publish } = useRequest(
+    async () => {
+      if (!id) return
+      await updateQuestionService(id, { ...pageInfo, componentList, isPublished: true })
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success('发布成功')
+        nav('/question/statistic/' + id)
+      },
+    }
+  )
+  return (
+    <Button type="primary" onClick={publish} disabled={loading}>
+      发布
+    </Button>
+  )
+}
 // 编辑器头部组件
 const EditHeader: React.FC = () => {
   const nav = useNavigate()
@@ -104,7 +129,7 @@ const EditHeader: React.FC = () => {
         <div className={style['right']}>
           <Space>
             <SaveButton />
-            <Button type="primary">发布</Button>
+            <PublishButton />
           </Space>
         </div>
       </div>
