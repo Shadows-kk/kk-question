@@ -7,6 +7,7 @@ import { getComponentConfByType, ComponentPropsType } from '../../../components/
 const NoProp: React.FC = () => {
   return <div>未选中组件</div>
 }
+
 const ComponentProp: React.FC = () => {
   const dispatch = useDispatch()
   const { selectedComponent } = useGetComponentInfo()
@@ -24,12 +25,15 @@ const ComponentProp: React.FC = () => {
   }
   // 根据配置找到属性组件
   const { PropComponent } = componentConf
+
   return (
-    <PropComponent
-      {...props}
-      onChange={changeProps}
-      disabled={isLocked || isHidden}
-    ></PropComponent>
+    <>
+      <PropComponent
+        {...props}
+        onChange={changeProps}
+        disabled={isLocked || isHidden}
+      ></PropComponent>
+    </>
   )
 }
 export default ComponentProp

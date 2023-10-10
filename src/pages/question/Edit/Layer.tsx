@@ -9,7 +9,10 @@ import {
   changeComponentTitle,
   changeComponentHidden,
   toggleComponentLock,
+  moveComponent,
 } from '../../../store/componentsReducer'
+import SortableContainer from '@/components/DragSortable/SortableContainer'
+import SortableItem from '@/components/DragSortable/SortableItem'
 import style from './Layer.module.scss'
 const Layer: React.FC = () => {
   const { componentList, selectedID } = useGetComponentInfo()
@@ -56,8 +59,16 @@ const Layer: React.FC = () => {
       })
     )
   }
+  // SortableContainer的items属性，需要每个item都有id
+  const componentListWidthId = componentList.map(item => {
+    return { ...item, id: item.fe_id }
+  })
+  // 拖拽排序结束
+  const handleDragEnd = (oldIndex: number, newIndex: number) => {
+    dispatch(moveComponent({ oldIndex, newIndex }))
+  }
   return (
-    <>
+    <SortableContainer items={componentListWidthId} onDragEnd={handleDragEnd}>
       {componentList.map(item => {
         const { fe_id, title, isHidden, isLocked } = item
         // 拼接title classname
@@ -68,42 +79,44 @@ const Layer: React.FC = () => {
           [selectedClassName]: fe_id === selectedID,
         })
         return (
-          <div key={fe_id} className={style.wrapper}>
-            <div className={titleClassName} onClick={() => handleTitleClick(fe_id)}>
-              {fe_id === changingTitleId && (
-                <Input
-                  value={title}
-                  onBlur={() => setChangingTitleId('')}
-                  onPressEnter={() => setChangingTitleId('')}
-                  onChange={handleValueChange}
-                ></Input>
-              )}
-              {fe_id !== changingTitleId && title}
+          <SortableItem key={fe_id} id={fe_id}>
+            <div className={style.wrapper}>
+              <div className={titleClassName} onClick={() => handleTitleClick(fe_id)}>
+                {fe_id === changingTitleId && (
+                  <Input
+                    value={title}
+                    onBlur={() => setChangingTitleId('')}
+                    onPressEnter={() => setChangingTitleId('')}
+                    onChange={handleValueChange}
+                  ></Input>
+                )}
+                {fe_id !== changingTitleId && title}
+              </div>
+              <div className={style.handler}>
+                <Space>
+                  <Button
+                    size="small"
+                    shape="circle"
+                    className={!isHidden ? style.btn : ''}
+                    icon={<EyeInvisibleOutlined />}
+                    type={isHidden ? 'primary' : 'default'}
+                    onClick={() => changeHidden(fe_id, !isHidden)}
+                  />
+                  <Button
+                    size="small"
+                    shape="circle"
+                    className={!isLocked ? style.btn : ''}
+                    icon={<LockOutlined />}
+                    type={isLocked ? 'primary' : 'default'}
+                    onClick={() => changeLock(fe_id)}
+                  />
+                </Space>
+              </div>
             </div>
-            <div className={style.handler}>
-              <Space>
-                <Button
-                  size="small"
-                  shape="circle"
-                  className={!isHidden ? style.btn : ''}
-                  icon={<EyeInvisibleOutlined />}
-                  type={isHidden ? 'primary' : 'default'}
-                  onClick={() => changeHidden(fe_id, !isHidden)}
-                />
-                <Button
-                  size="small"
-                  shape="circle"
-                  className={!isLocked ? style.btn : ''}
-                  icon={<LockOutlined />}
-                  type={isLocked ? 'primary' : 'default'}
-                  onClick={() => changeLock(fe_id)}
-                />
-              </Space>
-            </div>
-          </div>
+          </SortableItem>
         )
       })}
-    </>
+    </SortableContainer>
   )
 }
 export default Layer

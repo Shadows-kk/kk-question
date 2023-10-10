@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import produce from 'immer'
 import { nanoid } from 'nanoid'
+import { arrayMove } from '@dnd-kit/sortable'
 import { ComponentPropsType } from '../../components/QuestionComponents'
 import { getNextSelectedId, insertNewComponent } from './utils'
 export type ComponentInfoType = {
@@ -128,6 +129,16 @@ const componentsSlice = createSlice({
       if (index < 0) return
       if (index < componentList.length - 1) draft.selectedID = componentList[index + 1].fe_id
     }),
+    moveComponent: produce(
+      (
+        draft: ComponentsStateType,
+        action: PayloadAction<{ oldIndex: number; newIndex: number }>
+      ) => {
+        const { componentList: curComponent } = draft
+        const { oldIndex, newIndex } = action.payload
+        draft.componentList = arrayMove(curComponent, oldIndex, newIndex)
+      }
+    ),
     // 撤销
     // 重做
 
@@ -156,5 +167,6 @@ export const {
   selectPrevComponent,
   selectNextComponent,
   changeComponentTitle,
+  moveComponent,
 } = componentsSlice.actions
 export default componentsSlice.reducer
