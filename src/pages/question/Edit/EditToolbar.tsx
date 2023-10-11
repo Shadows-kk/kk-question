@@ -7,6 +7,7 @@ import {
   toggleComponentLock,
   copyComponent,
   pasteComponent,
+  moveComponent,
 } from '../../../store/componentsReducer'
 import {
   DeleteOutlined,
@@ -14,12 +15,18 @@ import {
   LockOutlined,
   CopyOutlined,
   BlockOutlined,
+  UpOutlined,
+  DownOutlined,
 } from '@ant-design/icons'
 import useGetComponentInfo from '../../../hooks/useGetComponentInfo'
 const EditToolbar: React.FC = () => {
   const dispatch = useDispatch()
-  const { selectedID, selectedComponent, copiedComponent } = useGetComponentInfo()
+  const { selectedID, componentList, selectedComponent, copiedComponent } = useGetComponentInfo()
   const { isLocked } = selectedComponent || {}
+  const length = componentList.length
+  const selectedIndex = componentList.findIndex(i => i.fe_id === selectedID)
+  const isFirst = selectedIndex === 0
+  const isLast = selectedIndex === length - 1
   // 删除组件
   const handleDelete = () => {
     dispatch(removeSelectedComponent())
@@ -40,6 +47,16 @@ const EditToolbar: React.FC = () => {
   const handlePaste = () => {
     if (!copiedComponent) return
     dispatch(pasteComponent())
+  }
+  // 上移组件
+  const handleUp = () => {
+    if (!selectedID) return
+    dispatch(moveComponent({ oldIndex: selectedIndex, newIndex: selectedIndex - 1 }))
+  }
+  // 下移组件
+  const handleDown = () => {
+    if (!selectedID) return
+    dispatch(moveComponent({ oldIndex: selectedIndex, newIndex: selectedIndex + 1 }))
   }
   return (
     <Space>
@@ -66,6 +83,17 @@ const EditToolbar: React.FC = () => {
           shape="circle"
           icon={<BlockOutlined />}
           onClick={handlePaste}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="上移">
+        <Button disabled={isFirst} shape="circle" icon={<UpOutlined />} onClick={handleUp}></Button>
+      </Tooltip>
+      <Tooltip title="下移">
+        <Button
+          disabled={isLast}
+          shape="circle"
+          icon={<DownOutlined />}
+          onClick={handleDown}
         ></Button>
       </Tooltip>
     </Space>

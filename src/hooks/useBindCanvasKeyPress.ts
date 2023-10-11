@@ -11,8 +11,11 @@ import {
 // 判断当前选择的组件，非输入框时合法
 const isActiveElementValid = () => {
   const activeElement = document.activeElement
-  //选中input组件，document.activeElement返回的是input，其他返回的都是body
+  // 没使用 dnd-kit 组件之前
+  // if (activeElement == document.body) return true //选中input组件，document.activeElement返回的是input，其他返回的都是body
+  // 使用了 dnd-kit 组件之后
   if (activeElement == document.body) return true
+  if (activeElement?.matches('div[role="button"]')) return true //匹配dnd-kit的组件
   return false
 }
 const useBindCanvasKeyPress = () => {
