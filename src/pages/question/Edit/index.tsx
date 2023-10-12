@@ -1,5 +1,7 @@
 import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
+import { useTitle } from 'ahooks'
+import useGetPageInfo from '../../../hooks/useGetPageInfo'
 import useLoadQuestionData from '../../../hooks/useLoadQuestionData'
 import { changeSelectedId } from '../../../store/componentsReducer'
 
@@ -11,6 +13,8 @@ import RightPanel from './RightPanel'
 
 const Edit: FC = () => {
   const { loading } = useLoadQuestionData()
+  const { title } = useGetPageInfo()
+  useTitle(`修改问卷 - ${title}`)
   const dispatch = useDispatch()
   const clearSelectedId = () => {
     dispatch(changeSelectedId(''))

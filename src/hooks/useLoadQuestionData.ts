@@ -22,7 +22,14 @@ const useLoadQuestionData = () => {
   // 监听data的变化，将获取的数据存入redux中
   useEffect(() => {
     if (!data) return
-    const { componentList = [], title = '', desc = '', js = '', css = '' } = data
+    const {
+      componentList = [],
+      title = '',
+      desc = '',
+      js = '',
+      css = '',
+      isPublished = false,
+    } = data
     let selectedID = ''
     if (componentList.length > 0) {
       selectedID = componentList[0].fe_id
@@ -30,7 +37,7 @@ const useLoadQuestionData = () => {
     // 1.把 componentList 存入 redux中
     dispatch(resetComponents({ componentList, selectedID, copiedComponent: null }))
     // 2. 把 pageInfo 存入 redux中
-    dispatch(resetPageInfo({ title, desc, js, css }))
+    dispatch(resetPageInfo({ title, desc, js, css, isPublished }))
   }, [data])
   //监听到id变化，获取问卷的详情数据
   useEffect(() => {

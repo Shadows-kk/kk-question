@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+}
+
+.header .left {
+  flex: 1;
+}
+
+.header .right {
+  flex: 1;
+  text-align: right;
+}
+
+.content {
+  margin-bottom: 20px;
+}
+
+.bottom {
+  margin-bottom: 20px;
+  text-align: center;
+}
+/*# sourceMappingURL=common.module.css.map */

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAA;EACR,KAAK,EAAE,MAAM;EACb,OAAO,EAAE,MAAM;EACf,MAAM,EAAE,MAAM;EACd,OAAO,EAAE,IAAI;CACd;;AACD,AAAA,KAAK,CAAA;EACH,KAAK,EAAE,KAAK;CACb;;AACD,AAAA,MAAM,CAAA;EACJ,IAAI,EAAE,CAAC;EACP,WAAW,EAAE,IAAI;CAClB",
+    "sources": [
+        "manageLayout.module.scss"
+    ],
+    "names": [],
+    "file": "manageLayout.module.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAC,AAAA,UAAU,CAAA;EACT,MAAM,EAAC,KACR;CAAC",
+    "sources": [
+        "QuestionLayout.module.scss"
+    ],
+    "names": [],
+    "file": "QuestionLayout.module.css"
+}
