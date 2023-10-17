@@ -1,9 +1,0 @@
-.container {
-  height: calc(100vh - 65px - 64px);
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-/*# sourceMappingURL=Register.module.css.map */

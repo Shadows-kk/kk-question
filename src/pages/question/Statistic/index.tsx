@@ -6,11 +6,17 @@ import useLoadQuestionData from '../../../hooks/useLoadQuestionData'
 import useGetPageInfo from '../../../hooks/useGetPageInfo'
 import style from './index.module.scss'
 import StatisHeader from './StatisHeader'
+import ComponentList from './ComponentList'
+import PageStatistic from './PageStatistic'
 const Statistic: FC = () => {
   const nav = useNavigate()
 
   const { loading } = useLoadQuestionData()
   const { title, isPublished } = useGetPageInfo()
+
+  // 状态提升 selectedId type
+  const [selectedComponentId, setSelectedComponentId] = React.useState('')
+  const [selectedComponentType, setSelectedComponentType] = React.useState('')
   // 修改标题
   useTitle(`问卷统计 - ${title}`)
   const loadingEle = (
@@ -32,8 +38,20 @@ const Statistic: FC = () => {
     }
     return (
       <>
-        <div className={style.left}>zuo</div>
-        <div className={style.main}>center</div>
+        <div className={style.left}>
+          <ComponentList
+            selectedComponentId={selectedComponentId}
+            setSelectedComponentId={setSelectedComponentId}
+            setSelectedComponentType={setSelectedComponentType}
+          ></ComponentList>
+        </div>
+        <div className={style.main}>
+          <PageStatistic
+            selectedComponentId={selectedComponentId}
+            setSelectedComponentId={setSelectedComponentId}
+            setSelectedComponentType={setSelectedComponentType}
+          />
+        </div>
         <div className={style.right}>right</div>
       </>
     )
