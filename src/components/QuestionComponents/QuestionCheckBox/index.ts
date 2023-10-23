@@ -1,5 +1,6 @@
 import Component from './QuestionCheckBox'
 import PropComponent from './PropComponent'
+import StatisticComponent from './StatisticComponent'
 import { QuestionCheckBoxDefaultProps } from './interface'
 export * from './interface'
 
@@ -9,4 +10,5 @@ export default {
   Component, //画布显示的组件
   PropComponent, //修改属性的组件
   defaultProps: QuestionCheckBoxDefaultProps,
+  StatisticComponent,
 }

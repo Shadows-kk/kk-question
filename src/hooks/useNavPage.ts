@@ -11,6 +11,7 @@ function useNavPage(waitingUserData: boolean) {
   const nav = useNavigate()
   const { username } = getUserInfo()
   const { pathname } = useLocation()
+  console.log(pathname)
   useEffect(() => {
     if (waitingUserData) return
     // 已经登录 跳转判断

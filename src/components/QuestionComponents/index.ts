@@ -8,7 +8,10 @@ import QuestionRadioConf, {
   QuestionRadioPropsType,
   QuestionRadioStatisticProps,
 } from './QuestionRadio'
-import QuestionCheckBoxConf, { QuestionCheckBoxPropsType } from './QuestionCheckBox'
+import QuestionCheckBoxConf, {
+  QuestionCheckBoxPropsType,
+  QuestionCheckBoxStatisticProps,
+} from './QuestionCheckBox'
 // 各个组件统一的 prop type
 export type ComponentPropsType = QuestionTitlePropsType &
   QuestionInputPropsType &
@@ -18,7 +21,7 @@ export type ComponentPropsType = QuestionTitlePropsType &
   QuestionRadioPropsType &
   QuestionCheckBoxPropsType
 // 各个组件统一的stat配置
-type componentStatisticPropsType = QuestionRadioStatisticProps
+type componentStatisticPropsType = QuestionRadioStatisticProps & QuestionCheckBoxStatisticProps
 // 各个组件统一的配置类型
 export type ComponentConfType = {
   title: string
