@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Typography } from 'antd'
 import { useDispatch } from 'react-redux'
 import { nanoid } from 'nanoid'
@@ -11,7 +11,17 @@ const generateComponent = (c: ComponentConfType) => {
   const dispatch = useDispatch()
   const { title, type, Component, defaultProps } = c
   // 点击添加到画布中
-  const handleClick = () => {
+  // const handleClick = () => {
+  //   dispatch(
+  //     addComponent({
+  //       fe_id: nanoid(),
+  //       title,
+  //       type,
+  //       props: defaultProps,
+  //     })
+  //   )
+  // }
+  const handleClick = useCallback(() => {
     dispatch(
       addComponent({
         fe_id: nanoid(),
@@ -20,7 +30,7 @@ const generateComponent = (c: ComponentConfType) => {
         props: defaultProps,
       })
     )
-  }
+  }, [])
   return (
     <div className={style.container} key={type} onClick={handleClick}>
       <div className={style.component}>
