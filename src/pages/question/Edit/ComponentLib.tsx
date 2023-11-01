@@ -30,7 +30,7 @@ const generateComponent = (c: ComponentConfType) => {
         props: defaultProps,
       })
     )
-  }, [])
+  }, []) //没有依赖项才有意义
   return (
     <div className={style.container} key={type} onClick={handleClick}>
       <div className={style.component}>

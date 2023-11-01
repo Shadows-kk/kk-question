@@ -1,0 +1,51 @@
+@charset "UTF-8";
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.container .main {
+  flex: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+  margin: 0 24px;
+}
+
+.container .main .center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container .main .center .canvas-container {
+  width: 400px;
+  height: 715px;
+  background-color: #fff;
+  padding: 12px;
+  overflow: auto;
+}
+
+.container .main .left {
+  width: 295px;
+  background-color: #fff;
+  padding: 0 12px;
+}
+
+.container .main .right {
+  width: 285px;
+  background-color: #fff;
+  padding: 0 12px;
+}
+
+/* 滚动条上的滚动滑块 */
+::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+/* 滚动条轨道 */
+/*# sourceMappingURL=index.module.css.map */
