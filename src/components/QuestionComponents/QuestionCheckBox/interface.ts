@@ -14,7 +14,7 @@ export type QuestionCheckBoxPropsType = {
 }
 
 export const QuestionCheckBoxDefaultProps: QuestionCheckBoxPropsType = {
-  title: '多选',
+  title: '多选标题',
   isVertical: false,
   list: [
     { value: 'item1', text: '选项1', checked: false },

@@ -13,7 +13,7 @@ export type QuestionRadioPropsType = {
   disabled?: boolean
 }
 export const QuestionRadioDefaultProps: QuestionRadioPropsType = {
-  title: '标题',
+  title: '单选标题',
   isVertical: false,
   options: [
     { value: 'item1', text: '选项1' },
